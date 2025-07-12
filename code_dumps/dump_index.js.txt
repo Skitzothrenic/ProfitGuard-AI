@@ -1,17 +1,3 @@
-﻿### FILE: ui\src\index.js
-// File: /ui/src/index.js
-import React from 'react';
-import { createRoot } from 'react-dom/client';  // React 18 rendering API
-import './index.css';
-import App from './App';
-
-const container = document.getElementById('root');
-const root = createRoot(container);
-
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:6fa18254daeb218956b24be753f6ab59ddba597952ad17bb2dcd0a86a6a3d944
+size 366

@@ -1,30 +1,3 @@
-﻿### FILE: ui\src\components\ChatTrigger.js
-// src/components/ChatTrigger.js
-import React, { useState } from 'react';
-import ChatBox from './ChatBox';  // Ensure this import is correct
-
-const ChatTrigger = () => {
-  const [showChatBox, setShowChatBox] = useState(false);  // State to toggle chat box visibility
-  
-  const toggleChatBox = () => {
-    setShowChatBox(prevState => !prevState);  // Toggle the state
-  };
-
-  return (
-    <div>
-      <h2>Keyword Action Binder</h2>
-      
-      {/* Button to toggle the chat box */}
-      <button onClick={toggleChatBox}>
-        {showChatBox ? 'Hide Chat Box' : 'Show Chat Box'}
-      </button>
-
-      {/* Conditionally render ChatBox */}
-      {showChatBox && <ChatBox />}
-    </div>
-  );
-};
-
-export default ChatTrigger;
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:59a247c3c57d21066ee0b27b2b1031a01dcfdf35b0704383eff9538730730c66
+size 799
