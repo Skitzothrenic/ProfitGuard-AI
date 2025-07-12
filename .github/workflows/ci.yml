@@ -1,0 +1,45 @@
+name: Continuous Integration
+
+# Trigger the workflow when changes are pushed to the repository
+on:
+  push:
+    branches:
+      - master # You can change this to your default branch (e.g., main)
+  pull_request:
+    branches:
+      - master # You can change this to your default branch (e.g., main)
+
+# Define the jobs and steps of the workflow
+jobs:
+  build:
+    runs-on: ubuntu-latest # This runs the job on the latest version of Ubuntu
+
+    steps:
+    # Step 1: Check out the code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Step 2: Set up Node.js (if you're using it for your app)
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14' # Change this to the version you're using
+
+    # Step 3: Install dependencies
+    - name: Install dependencies
+      run: npm install
+
+    # Step 4: Run tests (modify this if you're using another test framework)
+    - name: Run tests
+      run: npm test
+
+    # Optional: If you have any build step
+    # Step 5: Build your app (modify if needed)
+    - name: Build app
+      run: npm run build
+
+    # Optional: Deploy the app after the tests (if applicable)
+    # Step 6: Deploy app (example step)
+    # - name: Deploy
+    #   run: ./deploy.sh # Or any command you use to deploy your app
+
