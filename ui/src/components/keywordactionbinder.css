@@ -1,0 +1,4 @@
+/* Basic style to prevent React crash */
+.keyword-action-container {
+  padding: 10px;
+}

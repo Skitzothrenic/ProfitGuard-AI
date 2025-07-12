@@ -1,0 +1,211 @@
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
+const fs = require('fs');
+const { exec } = require('child_process');
+const tmp = require('tmp');
+const { getActionsForMessage } = require('./chatparser');
+
+let mainWindow;
+
+function createWindow() {
+  mainWindow = new BrowserWindow({
+    width: 1000,
+    height: 800,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: false,
+      contextIsolation: true,
+    },
+  });
+
+  const htmlPath = path.resolve(__dirname, 'ui', 'build', 'index.html');
+  console.log('[Main] Attempting to load UI from:', htmlPath);
+
+  if (!fs.existsSync(htmlPath)) {
+    console.error('[Main] UI HTML file not found:', htmlPath);
+  } else {
+    mainWindow.loadFile(htmlPath);
+    console.log('[Main] UI loaded successfully from:', htmlPath);
+  }
+
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
+}
+
+app.on('ready', createWindow);
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit();
+});
+app.on('activate', () => {
+  if (mainWindow === null) createWindow();
+});
+
+ipcMain.on('chat-message', (event, data) => {
+  console.log('[Main] Received chat-message:', data);
+  const { message, keywordActions } = data;
+
+  if (!message || !keywordActions) {
+    console.warn('[Main] Invalid chat-message payload:', data);
+    return;
+  }
+
+  const triggered = getActionsForMessage(message, keywordActions);
+
+  for (const action of triggered) {
+    switch (action.type) {
+      case 'Play Sound':
+        if (action.base64) {
+          console.log('[Main] Playing base64 sound from renderer');
+          mainWindow.webContents.send('play-sound', action.base64);
+        } else if (action.file && action.file.name) {
+          console.log(`[Main] Playing sound from file: ${action.file.name}`);
+          const soundPath = path.join(__dirname, 'ui', 'public', action.file.name);
+          if (fs.existsSync(soundPath)) {
+            mainWindow.webContents.send('play-sound', soundPath);
+          } else {
+            console.warn('[Main] Sound file not found:', soundPath);
+          }
+        } else {
+          console.warn('[Main] No valid sound source provided');
+        }
+        break;
+
+      case 'Show Text Alert':
+        console.log('[Main] Showing alert:', action.message);
+        mainWindow.webContents.send('show-alert', {
+          message: action.message,
+          color: action.color || '#ff0000',
+          duration: action.duration || 5,
+          fontSize: action.fontSize || '24px',
+        });
+        break;
+
+      case 'Start Timer':
+        console.log('[Main] Starting timer with full config:', action);
+        mainWindow.webContents.send('start-timer', {
+          name: action.name || 'Timer',
+          duration: Number(action.duration) || 10,
+          direction: action.direction || 'down',
+          color: action.color || '#00ff00',
+          size: action.size || 'medium',
+        });
+        break;
+
+      case 'Key Press':
+        if (Array.isArray(action.keys)) {
+          console.log('[Main] Simulating key press via PowerShell:', action.keys);
+          for (const key of action.keys) {
+            let psKey = '';
+            switch (key.toLowerCase()) {
+              case 'enter': psKey = '{ENTER}'; break;
+              case 'esc':
+              case 'escape': psKey = '{ESC}'; break;
+              case 'tab': psKey = '{TAB}'; break;
+              case 'up': psKey = '{UP}'; break;
+              case 'down': psKey = '{DOWN}'; break;
+              case 'left': psKey = '{LEFT}'; break;
+              case 'right': psKey = '{RIGHT}'; break;
+              default: psKey = key.length === 1 ? key : '';
+            }
+
+            if (psKey) {
+              const command = `powershell -Command "$wshell = New-Object -ComObject wscript.shell; $wshell.SendKeys('${psKey}')"`
+              exec(command, (error) => {
+                if (error) {
+                  console.error('[Main] PowerShell key press error:', error.message);
+                } else {
+                  console.log(`[Main] Sent key using PowerShell: ${psKey}`);
+                }
+              });
+            } else {
+              console.warn('[Main] Unsupported key for PowerShell:', key);
+            }
+          }
+        }
+        break;
+
+      case 'Send Chat Text':
+        if (typeof action.message === 'string') {
+          const delay = Math.max(Number(action.delay) || 50, 10);
+          const safeMessage = action.message.replace(/"/g, '`"');
+          console.log(`[Main] Sending chat message with delay ${delay}ms: "${safeMessage}"`);
+
+          const psScript = `
+            $wshell = New-Object -ComObject wscript.shell
+            Start-Sleep -Milliseconds 50
+            "${safeMessage}".ToCharArray() | ForEach-Object {
+              $wshell.SendKeys($_)
+              Start-Sleep -Milliseconds ${delay}
+            }
+            $wshell.SendKeys('{ENTER}')
+          `.trim();
+
+          try {
+            const tempFile = tmp.fileSync({ prefix: 'chat-', postfix: '.ps1' });
+
+            fs.open(tempFile.name, 'w', (err, fd) => {
+              if (err) {
+                console.error('[Main] Failed to open temp PowerShell file:', err.message);
+                return;
+              }
+
+              fs.write(fd, Buffer.from(psScript, 'utf16le'), 0, Buffer.byteLength(psScript, 'utf16le'), null, (err) => {
+                if (err) {
+                  console.error('[Main] Failed to write to PowerShell file:', err.message);
+                  return;
+                }
+
+                fs.close(fd, (err) => {
+                  if (err) {
+                    console.error('[Main] Failed to close PowerShell file:', err.message);
+                    return;
+                  }
+
+                  setTimeout(() => {
+                    exec(`powershell -ExecutionPolicy Bypass -File "${tempFile.name}"`, (error, stdout, stderr) => {
+                      if (error) {
+                        console.error('[Main] PowerShell chat text error:', error.message);
+                      } else {
+                        console.log('[Main] Chat text successfully sent via temp .ps1 script');
+                      }
+
+                      tempFile.removeCallback(); // Clean up
+                    });
+                  }, 50);
+                });
+              });
+            });
+          } catch (err) {
+            console.error('[Main] Failed to prepare or execute PowerShell script:', err.message);
+          }
+        } else {
+          console.warn('[Main] No message to send for Send Chat Text action');
+        }
+        break;
+
+      default:
+        console.warn(`[Main] Unknown action type: ${action.type}`);
+    }
+  }
+});
+
+ipcMain.on('play-sound', (event, soundFileName) => {
+  const soundPath = path.join(__dirname, 'ui', 'public', soundFileName);
+  console.log('[Main] Playing sound (manual trigger):', soundPath);
+  if (fs.existsSync(soundPath)) {
+    mainWindow.webContents.send('play-sound', soundPath);
+  } else {
+    console.warn('[Main] Sound file not found:', soundPath);
+  }
+});
+
+ipcMain.on('show-alert', (event, alertData) => {
+  console.log('[Main] Showing alert (manual trigger):', alertData);
+  mainWindow.webContents.send('show-alert', alertData);
+});
+
+ipcMain.on('start-timer', (event, timerData) => {
+  console.log('[Main] Starting timer (manual trigger):', timerData);
+  mainWindow.webContents.send('start-timer', timerData);
+});

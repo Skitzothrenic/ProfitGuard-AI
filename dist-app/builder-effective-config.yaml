@@ -1,0 +1,12 @@
+directories:
+  output: dist-app
+  buildResources: build
+appId: com.pantheon.parser
+productName: PantheonUltimateParser
+files:
+  - filter:
+      - main.js
+      - ui/build/**/*
+win:
+  target: nsis
+electronVersion: 28.3.3

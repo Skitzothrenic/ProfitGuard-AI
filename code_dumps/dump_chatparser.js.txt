@@ -1,0 +1,28 @@
+﻿### FILE: chatparser.js
+// File: /chatparser.js
+function getActionsForMessage(message, keywordPairs) {
+  console.log('[ChatParser] Checking message:', message);
+
+  if (!Array.isArray(keywordPairs)) {
+    console.warn('[ChatParser] Invalid keywordPairs, expected array:', keywordPairs);
+    return [];
+  }
+
+  const triggered = [];
+
+  for (const entry of keywordPairs) {
+    const keyword = entry.keyword?.toLowerCase();
+    if (!keyword) continue;
+
+    if (message.toLowerCase().includes(keyword)) {
+      console.log(`[ChatParser] Keyword matched: "${keyword}"`);
+      triggered.push(entry.action);
+    }
+  }
+
+  return triggered;
+}
+
+module.exports = { getActionsForMessage };
+
+

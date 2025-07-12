@@ -1,0 +1,36 @@
+{
+  "name": "pantheonultimateparser",
+  "version": "1.0.0",
+  "description": "Pantheon MMO chat monitor and automation tool",
+  "author": "Shem Smith",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win --dir"
+  },
+  "build": {
+    "appId": "com.pantheon.parser",
+    "productName": "PantheonUltimateParser",
+    "directories": {
+      "output": "dist-app"
+    },
+    "files": [
+      "main.js",
+      "ui/build/**/*"
+    ],
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0",
+    "electron-rebuild": "^3.2.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "electron-is-dev": "^3.0.1",
+    "tmp": "^0.2.3"
+  }
+}

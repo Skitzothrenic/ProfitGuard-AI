@@ -1,0 +1,106 @@
+/* Base page style */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #1a1a1a;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  color: #fff;
+}
+
+/* Root React container */
+#root {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Primary app wrapper */
+.app-container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  color: #000;
+}
+
+/* Typography */
+h1 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  margin: 20px 0 10px;
+}
+
+/* Form Elements */
+input[type="text"],
+select,
+button {
+  font-size: 16px;
+  padding: 8px;
+  margin: 10px 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+input[type="text"]:focus,
+select:focus,
+button:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+/* Button Styling */
+button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+/* Label spacing */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Chat input + button alignment */
+.chat-input-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.chat-input-row input {
+  flex-grow: 1;
+  padding: 10px;
+}
+
+.chat-input-row button {
+  padding: 10px 20px;
+}
+
+/* Timer rows */
+.timer-row {
+  background-color: #111;
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  font-size: 18px;
+}

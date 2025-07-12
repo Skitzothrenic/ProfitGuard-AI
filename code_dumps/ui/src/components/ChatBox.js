@@ -1,0 +1,40 @@
+// ui/src/components/ChatBox.js
+import React, { useEffect, useState } from 'react';
+
+function ChatBox() {
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    if (window.electronAPI?.onPlaySound) {
+      window.electronAPI.onPlaySound(() => {
+        console.log('[Renderer] Received play-sound');
+        const sound = new Audio('notification.mp3');
+        sound.play().catch((err) => console.error('[Renderer] Sound playback error:', err));
+      });
+    }
+
+    if (window.electronAPI?.onShowAlert) {
+      window.electronAPI.onShowAlert((_, message) => {
+        console.log('[Renderer] Received show-alert:', message);
+        alert(message);
+      });
+    }
+  }, []);
+
+  const addMessage = (msg) => {
+    setMessages((prev) => [...prev, msg]);
+  };
+
+  return (
+    <div className="chat-box">
+      <div className="messages">
+        {messages.map((msg, index) => (
+          <div key={index} className="message">{msg}</div>
+        ))}
+      </div>
+      <button onClick={() => addMessage('New message!')}>Add Message</button>
+    </div>
+  );
+}
+
+export default ChatBox;

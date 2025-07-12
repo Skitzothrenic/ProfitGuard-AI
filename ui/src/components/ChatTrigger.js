@@ -1,0 +1,27 @@
+// src/components/ChatTrigger.js
+import React, { useState } from 'react';
+import ChatBox from './ChatBox';  // Ensure this import is correct
+
+const ChatTrigger = () => {
+  const [showChatBox, setShowChatBox] = useState(false);  // State to toggle chat box visibility
+  
+  const toggleChatBox = () => {
+    setShowChatBox(prevState => !prevState);  // Toggle the state
+  };
+
+  return (
+    <div>
+      <h2>Keyword Action Binder</h2>
+      
+      {/* Button to toggle the chat box */}
+      <button onClick={toggleChatBox}>
+        {showChatBox ? 'Hide Chat Box' : 'Show Chat Box'}
+      </button>
+
+      {/* Conditionally render ChatBox */}
+      {showChatBox && <ChatBox />}
+    </div>
+  );
+};
+
+export default ChatTrigger;

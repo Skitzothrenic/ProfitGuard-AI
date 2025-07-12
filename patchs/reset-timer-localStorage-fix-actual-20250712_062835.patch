@@ -1,0 +1,29 @@
+diff --git a/ui/src/components/KeywordActionBinder.js b/ui/src/components/KeywordActionBinder.js
+index 0000000..1111111 100644
+--- a/ui/src/components/KeywordActionBinder.js
++++ b/ui/src/components/KeywordActionBinder.js
+@@ -73,6 +73,14 @@
+   }, []);  // Only run once on mount
+
++  // Load the resetTimer from localStorage
++  const savedResetTimer = localStorage.getItem('resetTimer');
++  if (savedResetTimer !== null) {
++    setResetTimer(JSON.parse(savedResetTimer));
++  }
++
+   useEffect(() => {
+     localStorage.setItem('keywordActions', JSON.stringify(keywordActions));
+   }, [keywordActions]);
+
+   useEffect(() => {
+     localStorage.setItem('triggerStates', JSON.stringify(triggerStates));
+   }, [triggerStates]);
+
+   useEffect(() => {
+     localStorage.setItem('categoryToggles', JSON.stringify(categoryToggles));
+   }, [categoryToggles]);
+
+   useEffect(() => {
+     // Save resetTimer to localStorage whenever it changes
+     localStorage.setItem('resetTimer', JSON.stringify(resetTimer));
+   }, [resetTimer]);

@@ -1,0 +1,52 @@
+
+--- /mnt/data/KeywordActionBinder.js  2025-07-12 07:00:00.000000000
++++ /mnt/data/KeywordActionBinder.js  2025-07-12 07:05:00.000000000
+@@ -36,6 +36,7 @@
+   const [resetTimer, setResetTimer] = useState(false);  // New option to reset or create new timer
++  useEffect(() => {
++    localStorage.setItem('resetTimer', JSON.stringify(resetTimer));
++  }, [resetTimer]);
+ 
+   useEffect(() => {
+     console.log('[KeywordActionBinder] Loading from localStorage');
+@@ -74,7 +75,8 @@
+     const savedResetTimer = localStorage.getItem('resetTimer');
+     if (savedResetTimer !== null) {
+       setResetTimer(JSON.parse(savedResetTimer));
++    }
+ 
+     if (stored) setKeywordActions(JSON.parse(stored));
+     if (states) setTriggerStates(JSON.parse(states));
+@@ -172,6 +174,9 @@
+   const addOrUpdateAction = () => {
+     const keywords = keyword.split(',').map(k => k.trim()).filter(k => k);
+     if (keywords.length === 0) return;
+ 
+     const action = { type: actionType };
+ 
++    // Update resetTimer when adding or updating action
++    localStorage.setItem('resetTimer', JSON.stringify(resetTimer));
+ 
+     if (actionType === 'Play Sound') {
+       if (soundFile) {
+@@ -210,6 +215,9 @@
+         }
+       });
+     });
+ 
++    // Update localStorage with new keyword actions and resetTimer
++    localStorage.setItem('keywordActions', JSON.stringify(updated));
+ 
+     const updated = [...keywordActions];
+     if (editingIndex !== null) {
+       updated[editingIndex] = newActions[0];
+@@ -234,6 +242,9 @@
+     const updated = [...keywordActions];
+     setKeywordActions(updated);
+     setCategoryToggles(prev => ({
+       ...prev,
+       [category || 'Uncategorized']: prev[category || 'Uncategorized'] ?? true
++    }));
++    // Update resetTimer in localStorage after action assignment
++    localStorage.setItem('resetTimer', JSON.stringify(resetTimer));
+   };
