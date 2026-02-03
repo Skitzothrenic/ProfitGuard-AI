@@ -7,7 +7,6 @@ function TimerDisplay({ id, name, duration, direction = 'down', size = 'medium',
   const [startTime, setStartTime] = useState(Date.now());
   const [secondsLeft, setSecondsLeft] = useState(initialSeconds);
 
-  // Reset timer fully if ID changes (used to force remount-style behavior)
   useEffect(() => {
     setStartTime(Date.now());
     setSecondsLeft(initialSeconds);
@@ -63,7 +62,7 @@ function TimerDisplay({ id, name, duration, direction = 'down', size = 'medium',
         fontSize: fontSizeMap[size] || '1.5rem',
       }}
     >
-      <strong>{name}:</strong> {secondsLeft}s
+      <strong>{name}:</strong> {secondsLeft}<span> s</span>
     </div>
   );
 }
